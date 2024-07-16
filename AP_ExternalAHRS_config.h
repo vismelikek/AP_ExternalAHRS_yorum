@@ -1,0 +1,59 @@
+//OKUDUM
+#pragma once
+
+/* makro: #define SIZE 3 derken yaptığımız tanımlamalara makro deniyo, 
+
+#ifndef MELIKE
+#define MELIKE BURAK
+#endif
+
+dersen burak 1se melikeyi tanımla demiş oluyosun
+*/
+
+#include <AP_HAL/AP_HAL_Boards.h> //şimdi bunun içindeki bazı makroları yazıcam, bunlara bi daha bi bakıp anlamayı planlıyom
+
+/*#ifndef BOARD_FLASH_SIZE
+#define BOARD_FLASH_SIZE 2048
+#endif
+
+#ifndef HAL_GYROFFT_ENABLED
+#define HAL_GYROFFT_ENABLED (BOARD_FLASH_SIZE > 1024)
+#endif
+
+#ifndef HAL_ENABLE_SENDING_STATS
+#define HAL_ENABLE_SENDING_STATS BOARD_FLASH_SIZE >= 256
+#endif
+
+#ifndef HAL_WITH_POSTYPE_DOUBLE
+#define HAL_WITH_POSTYPE_DOUBLE BOARD_FLASH_SIZE > 1024
+#endif
+*/
+
+#ifndef HAL_EXTERNAL_AHRS_ENABLED
+#define HAL_EXTERNAL_AHRS_ENABLED BOARD_FLASH_SIZE > 1024 // BOARD_FLASH_SIZE > 1024 ise HAL_EXTERNAL_AHRS_ENABLED tanımlanıyo
+#endif 
+
+#ifndef AP_EXTERNAL_AHRS_BACKEND_DEFAULT_ENABLED
+#define AP_EXTERNAL_AHRS_BACKEND_DEFAULT_ENABLED HAL_EXTERNAL_AHRS_ENABLED //eğer bi üstteki tanımlama gerçekleştiyse bu da tanımlanıyo
+#endif
+
+//burdan sonrakilerin her biri modüllere ait makrolar, HAL_EXTERNAL_AHRS_ENABLED tanımlanınca hepsi tanımlanıyo
+#ifndef AP_EXTERNAL_AHRS_MICROSTRAIN5_ENABLED
+#define AP_EXTERNAL_AHRS_MICROSTRAIN5_ENABLED AP_EXTERNAL_AHRS_BACKEND_DEFAULT_ENABLED
+#endif
+
+#ifndef AP_EXTERNAL_AHRS_MICROSTRAIN7_ENABLED
+#define AP_EXTERNAL_AHRS_MICROSTRAIN7_ENABLED AP_EXTERNAL_AHRS_BACKEND_DEFAULT_ENABLED
+#endif
+
+#ifndef AP_MICROSTRAIN_ENABLED //microstrain 5 ya da 7 tanımlanınca bu da tanımlanıyo
+#define AP_MICROSTRAIN_ENABLED AP_EXTERNAL_AHRS_MICROSTRAIN5_ENABLED || AP_EXTERNAL_AHRS_MICROSTRAIN7_ENABLED // 11->1 10->1 00->0
+#endif
+
+#ifndef AP_EXTERNAL_AHRS_VECTORNAV_ENABLED
+#define AP_EXTERNAL_AHRS_VECTORNAV_ENABLED AP_EXTERNAL_AHRS_BACKEND_DEFAULT_ENABLED
+#endif
+
+#ifndef AP_EXTERNAL_AHRS_INERTIAL_LABS_ENABLED
+#define AP_EXTERNAL_AHRS_INERTIAL_LABS_ENABLED AP_EXTERNAL_AHRS_BACKEND_DEFAULT_ENABLED
+#endif
